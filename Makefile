@@ -10,11 +10,13 @@ SRC =	create.c	\
 	main.c		\
 	main_loop.c	\
 	events.c	\
-	sprite_mod.c
+	sprite_mod.c	\
+	display.c	\
+	my_strcmp.c
 
 OBJ = $(SRC:.c=.o)
 
-NAME = MyHunter
+NAME = my_hunter
 
 LIB = -l csfml-graphics -l csfml-system -l csfml-window
 
