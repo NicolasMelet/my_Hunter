@@ -10,53 +10,31 @@
 #include <stdlib.h>
 #include <time.h>
 
-int create_window(sfRenderWindow **window, sfVideoMode mode)
+int create_window(games *game)
 {
-    *window = sfRenderWindow_create(mode, "SFML window",
+    sfVideoMode mode = {1000, 700, 32};
+    sfVector2f init_pos;
+
+    init_pos.x = 200;
+    init_pos.y = 200;
+    game->bg_text = sfTexture_createFromFile("background.jpg", NULL);
+    game->m_text = sfTexture_createFromFile("menu.png", NULL);
+    game->window = sfRenderWindow_create(mode, "SFML window",
         sfResize | sfClose, NULL);
-    if (!window)
+    if (!game->window || !game->bg_text || !game->m_text)
         return 84;
-    sfRenderWindow_setFramerateLimit(*window, 60);
+    sfRenderWindow_setFramerateLimit(game->window, 60);
+    game->bg_sprite = sfSprite_create();
+    game->m_sprite = sfSprite_create();
+    sfSprite_setTexture(game->bg_sprite, game->bg_text, sfTrue);
+    sfSprite_setTexture(game->m_sprite, game->m_text, sfTrue);
+    sfSprite_setPosition(game->m_sprite, init_pos);
+    game->level = 0;
+    game->score = 0;
     return 0;
 }
 
-void set_vectors(chara *charac, sfVector2f init_pos)
-{
-    if (init_pos.x < 330)
-        charac->dir_x = ((double) (rand() % 251));
-    if (init_pos.x >= 330 && init_pos.x <= 660)
-        charac->dir_x = ((double) (rand() % 501) - 250);
-    if (init_pos.x > 660)
-        charac->dir_x = ((double) (rand() % 251 - 250));
-    charac->dir_y = -300;
-}
-
-void set_rect(chara *charac, int origin, int width, int height)
-{
-    charac->rect.top = 0;
-    charac->rect.left = 0;
-    charac->rect.width = 110;
-    charac->rect.height = 110;
-}
-
-int set_sprite(chara *charac, char *image_path, sfVector2f init_pos)
-{
-    charac->texture = sfTexture_createFromFile(image_path, NULL);
-    if (!charac->texture)
-        return 84;
-    charac->sprite = sfSprite_create();
-    sfSprite_setTexture(charac->sprite, charac->texture, sfTrue);
-    sfSprite_setPosition(charac->sprite, init_pos);
-    if (charac->dir_x >= 0)
-        charac->heading = 0;
-    else {
-        charac->heading = 1;
-        move_rect(&charac->rect, 330, 660);
-    }
-    return 0;
-}
-
-int create_charac(chara *charac)
+sfVector2f get_init_pos_ran(void)
 {
     sfVector2f init_pos;
     time_t t;
@@ -64,9 +42,17 @@ int create_charac(chara *charac)
     srand(time(&t));
     init_pos.x = (rand() % 801) + 100;
     init_pos.y = 700;
+    return init_pos;
+}
+
+int create_charac(chara *charac)
+{
+    sfVector2f init_pos = get_init_pos_ran();
+
+    charac->ko = 0;
     set_rect(charac, 0, 110, 110);
     set_vectors(charac, init_pos);
-    if (set_sprite(charac, "ducks.png", init_pos) == 84)
+    if (set_charac_sprite(charac, "ducks.png", init_pos) == 84)
         return 84;
     return 0;
 }

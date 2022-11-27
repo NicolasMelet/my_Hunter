@@ -41,9 +41,9 @@ void animate(globaltime *structime, chara *charac)
     charac->vect.y = charac->dir_y * structime->time.microseconds / 1000000.0;
     redirect_duck(charac);
     sfSprite_move(charac->sprite, charac->vect);
-    if (structime->seconds > 0.33) {
+    if (structime->seconds > 0.2) {
         move_rect(&charac->rect, 110, 330 + (330 * charac->heading));
-        while (structime->seconds > 0.33)
-            structime->seconds = 0;
+        structime->seconds = 0;
     }
+    sfSprite_setTextureRect(charac->sprite, charac->rect);
 }

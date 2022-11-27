@@ -8,19 +8,36 @@
 #include <SFML/Graphics.h>
 #include "header.h"
 
-void manage_mouse_click(sfMouseButtonEvent event, chara *charac)
+void click_play(games *game)
+{
+    if (game->event.mouseButton.x > 390 && game->event.mouseButton.x < 560 &&
+        game->event.mouseButton.y > 400 && game->event.mouseButton.y < 480) {
+        game->level = 1;
+    }
+}
+
+void duck_detection(games *game, chara *charac)
 {
     sfVector2f position = sfSprite_getPosition(charac->sprite);
 
-    if (event.x > position.x && event.x < position.x + 110 &&
-        event.y > position.y && event.y < position.y + 110)
-        my_putstr("We got him\n");
+    if (game->event.mouseButton.x > position.x &&
+        game->event.mouseButton.x < position.x + 110 &&
+        game->event.mouseButton.y > position.y &&
+        game->event.mouseButton.y < position.y + 110) {
+        game->score += 500;
+        my_putnbr(game->score);
+        my_putchar('\n');
+        repos_charac(charac);
+        charac->ko += 1;
+    }
 }
 
-void analyse_events(sfRenderWindow *window, sfEvent event, chara *charac)
+void analyse_events(games *game, chara *charac)
 {
-    if (event.type == sfEvtClosed)
-        sfRenderWindow_close(window);
-    if (event.type == sfEvtMouseButtonPressed)
-        manage_mouse_click(event.mouseButton, charac);
+    if (game->event.type == sfEvtClosed)
+        sfRenderWindow_close(game->window);
+    if (game->event.type == sfEvtMouseButtonPressed && game->level != 0)
+        duck_detection(game, charac);
+    if (game->event.type == sfEvtMouseButtonPressed && game->level == 0)
+        click_play(game);
 }

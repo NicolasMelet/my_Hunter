@@ -6,9 +6,18 @@
 */
 #include "header.h"
 
-void window_display(sfRenderWindow *window, chara *charac)
+void lv_window_display(games *game, chara *charac)
 {
-    sfRenderWindow_clear(window, sfBlack);
-    sfRenderWindow_drawSprite(window, charac->sprite, NULL);
-    sfRenderWindow_display(window);
+    sfRenderWindow_clear(game->window, sfBlack);
+    sfRenderWindow_drawSprite(game->window, game->bg_sprite, NULL);
+    sfRenderWindow_drawSprite(game->window, charac->sprite, NULL);
+    sfRenderWindow_display(game->window);
+}
+
+void m_window_display(games *game)
+{
+    sfRenderWindow_clear(game->window, sfBlack);
+    sfRenderWindow_drawSprite(game->window, game->bg_sprite, NULL);
+    sfRenderWindow_drawSprite(game->window, game->m_sprite, NULL);
+    sfRenderWindow_display(game->window);
 }

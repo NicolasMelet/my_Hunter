@@ -11,35 +11,50 @@
 #include <unistd.h>
 #include "header.h"
 
-int main_loop(sfRenderWindow *window,
-            chara *charac, globaltime *structime, sfEvent *event)
+void get_time(globaltime *structime)
 {
     structime->time = sfClock_getElapsedTime(structime->clock);
     structime->seconds += structime->time.microseconds / 1000000.0;
     sfClock_restart(structime->clock);
-    animate(structime, charac);
-    sfSprite_setTextureRect(charac->sprite, charac->rect);
-    while (sfRenderWindow_pollEvent(window, event)) {
-        analyse_events(window, *event, charac);
+}
+
+int menu(games *game, chara *charac, globaltime *structime)
+{
+    while (sfRenderWindow_pollEvent(game->window, &game->event)) {
+        analyse_events(game, charac);
     }
-    window_display(window, charac);
+    if (game->level != 0) {
+        structime->clock = sfClock_create();
+    }
+    m_window_display(game);
+    return 0;
+}
+
+int main_loop(games *game,
+            chara *charac, globaltime *structime)
+{
+    if (game->level == 0)
+        return menu(game, charac, structime);
+    get_time(structime);
+    animate(structime, charac);
+    while (sfRenderWindow_pollEvent(game->window, &game->event)) {
+        analyse_events(game, charac);
+    }
+    lv_window_display(game, charac);
     return 0;
 }
 
 int my_hunter(void)
 {
-    sfVideoMode mode = {1000, 700, 32};
-    sfRenderWindow *window;
+    games game;
     chara charac;
     globaltime structime;
-    sfEvent event;
 
-    structime.clock = sfClock_create();
-    if (create_window(&window, mode) == 84 || create_charac(&charac) == 84)
+    if (create_window(&game) == 84 || create_charac(&charac) == 84)
         return 84;
-    while (sfRenderWindow_isOpen(window)) {
-        main_loop(window, &charac, &structime, &event);
+    while (sfRenderWindow_isOpen(game.window)) {
+        main_loop(&game, &charac, &structime);
     }
-    clean_ress(&charac, window);
+    clean_ress(&charac, &game);
     return 0;
 }

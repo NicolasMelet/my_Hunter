@@ -12,7 +12,9 @@ SRC =	create.c	\
 	events.c	\
 	sprite_mod.c	\
 	display.c	\
-	my_strcmp.c
+	my_strcmp.c	\
+	clean.c		\
+	character.c
 
 OBJ = $(SRC:.c=.o)
 
