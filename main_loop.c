@@ -12,26 +12,26 @@
 #include "header.h"
 
 int main_loop(sfRenderWindow *window,
-            chara *charac, time *structime, sfEvent *event)
+            chara *charac, globaltime *structime, sfEvent *event)
 {
     structime->time = sfClock_getElapsedTime(structime->clock);
-    structime->seconds = structime->time.microseconds / 10000.0;
+    structime->seconds += structime->time.microseconds / 1000000.0;
+    sfClock_restart(structime->clock);
     animate(structime, charac);
     sfSprite_setTextureRect(charac->sprite, charac->rect);
     while (sfRenderWindow_pollEvent(window, event)) {
-        analyse_events(window, *event);
+        analyse_events(window, *event, charac);
     }
-    sfRenderWindow_clear(window, sfBlack);
-    sfRenderWindow_drawSprite(window, charac->sprite, NULL);
-    sfRenderWindow_display(window);
+    window_display(window, charac);
+    return 0;
 }
 
 int my_hunter(void)
 {
-    sfVideoMode mode = {800, 600, 32};
+    sfVideoMode mode = {1000, 700, 32};
     sfRenderWindow *window;
     chara charac;
-    time structime;
+    globaltime structime;
     sfEvent event;
 
     structime.clock = sfClock_create();
