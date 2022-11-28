@@ -10,27 +10,44 @@
 #include <stdlib.h>
 #include <time.h>
 
-int create_window(games *game)
+int set_bg(games *game)
 {
-    sfVideoMode mode = {1000, 700, 32};
+    game->bg_text = sfTexture_createFromFile("background.jpg", NULL);
+    if (!game->bg_text)
+        return 84;
+    game->bg_sprite = sfSprite_create();
+    sfSprite_setTexture(game->bg_sprite, game->bg_text, sfTrue);
+    return 0;
+}
+
+int set_m(games *game)
+{
     sfVector2f init_pos;
 
     init_pos.x = 200;
     init_pos.y = 200;
-    game->bg_text = sfTexture_createFromFile("background.jpg", NULL);
+
     game->m_text = sfTexture_createFromFile("menu.png", NULL);
-    game->window = sfRenderWindow_create(mode, "SFML window",
-        sfResize | sfClose, NULL);
-    if (!game->window || !game->bg_text || !game->m_text)
+    if (!game->m_text)
         return 84;
-    sfRenderWindow_setFramerateLimit(game->window, 60);
-    game->bg_sprite = sfSprite_create();
     game->m_sprite = sfSprite_create();
-    sfSprite_setTexture(game->bg_sprite, game->bg_text, sfTrue);
     sfSprite_setTexture(game->m_sprite, game->m_text, sfTrue);
     sfSprite_setPosition(game->m_sprite, init_pos);
+    return 0;
+}
+
+int create_window(games *game)
+{
+    sfVideoMode mode = {1000, 700, 32};
+
+    game->window = sfRenderWindow_create(mode, "SFML window",
+        sfResize | sfClose, NULL);
+    if (!game->window || set_bg(game) == 84 || set_m(game) == 84)
+        return 84;
+    sfRenderWindow_setFramerateLimit(game->window, 60);
     game->level = 0;
     game->score = 0;
+    game->ko = 0;
     return 0;
 }
 
@@ -49,7 +66,6 @@ int create_charac(chara *charac)
 {
     sfVector2f init_pos = get_init_pos_ran();
 
-    charac->ko = 0;
     set_rect(charac, 0, 110, 110);
     set_vectors(charac, init_pos);
     if (set_charac_sprite(charac, "ducks.png", init_pos) == 84)

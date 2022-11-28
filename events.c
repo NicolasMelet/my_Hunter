@@ -28,7 +28,7 @@ void duck_detection(games *game, chara *charac)
         my_putnbr(game->score);
         my_putchar('\n');
         repos_charac(charac);
-        charac->ko += 1;
+        game->ko += 1;
     }
 }
 

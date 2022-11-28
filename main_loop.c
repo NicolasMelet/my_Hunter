@@ -52,7 +52,7 @@ int my_hunter(void)
 
     if (create_window(&game) == 84 || create_charac(&charac) == 84)
         return 84;
-    while (sfRenderWindow_isOpen(game.window)) {
+    while (sfRenderWindow_isOpen(game.window) && game.ko < 8) {
         main_loop(&game, &charac, &structime);
     }
     clean_ress(&charac, &game);
