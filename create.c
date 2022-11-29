@@ -36,6 +36,21 @@ int set_m(games *game)
     return 0;
 }
 
+int set_score_text(games *game)
+{
+    sfVector2f init_pos;
+
+    init_pos.x = 750;
+    init_pos.y = 50;
+    game->text_score = sfText_create();
+    game->font = sfFont_createFromFile("Pointless.ttf");
+    set_score(game);
+    sfText_setFont(game->text_score, game->font);
+    sfText_setCharacterSize(game->text_score, 20);
+    sfText_setPosition(game->text_score, init_pos);
+    return 0;
+}
+
 int create_window(games *game)
 {
     sfVideoMode mode = {1000, 700, 32};
@@ -45,21 +60,12 @@ int create_window(games *game)
     if (!game->window || set_bg(game) == 84 || set_m(game) == 84)
         return 84;
     sfRenderWindow_setFramerateLimit(game->window, 60);
+    game->str_score = "SCORE : 0";
     game->level = 0;
     game->score = 0;
     game->ko = 0;
+    set_score_text(game);
     return 0;
-}
-
-sfVector2f get_init_pos_ran(void)
-{
-    sfVector2f init_pos;
-    time_t t;
-
-    srand(time(&t));
-    init_pos.x = (rand() % 801) + 100;
-    init_pos.y = 700;
-    return init_pos;
 }
 
 int create_charac(chara *charac)

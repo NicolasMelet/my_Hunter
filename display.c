@@ -10,6 +10,7 @@ void lv_window_display(games *game, chara *charac)
 {
     sfRenderWindow_clear(game->window, sfBlack);
     sfRenderWindow_drawSprite(game->window, game->bg_sprite, NULL);
+    sfRenderWindow_drawText(game->window, game->text_score, NULL);
     sfRenderWindow_drawSprite(game->window, charac->sprite, NULL);
     sfRenderWindow_display(game->window);
 }

@@ -33,10 +33,13 @@ typedef struct gamestruct {
     sfSprite *bg_sprite;
     sfTexture *m_text;
     sfSprite *m_sprite;
+    sfText *text_score;
+    sfFont *font;
     sfEvent event;
     int is_over;
     int level;
     int score;
+    char *str_score;
     int ko;
 } games;
 
@@ -59,6 +62,11 @@ void animate(globaltime *structime, chara *charac);
 int my_strcmp(char const *s1 ,char const *s2);
 int my_strlen(char const *str);
 void repos_charac(chara *charac);
+sfVector2f get_init_pos_ran(void);
+void set_score(games *game);
+char *int_to_str(int score);
+char *my_strcpy(char *dest, char const *src);
+char *my_strcat(char *dest, char const *src);
 sfVector2f get_init_pos_ran(void);
 
 #endif

@@ -14,7 +14,9 @@ SRC =	create.c	\
 	display.c	\
 	my_strcmp.c	\
 	clean.c		\
-	character.c
+	character.c	\
+	set_score.c	\
+	put.c
 
 OBJ = $(SRC:.c=.o)
 

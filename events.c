@@ -26,6 +26,7 @@ void duck_detection(games *game, chara *charac)
         game->event.mouseButton.y < position.y + 110) {
         game->score += 500;
         my_putnbr(game->score);
+        set_score(game);
         my_putchar('\n');
         repos_charac(charac);
         game->ko += 1;
