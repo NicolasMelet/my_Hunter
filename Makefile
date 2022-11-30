@@ -18,7 +18,8 @@ SRC =	create.c	\
 	set_score.c	\
 	put.c		\
 	get.c		\
-	collision.c
+	collision.c	\
+	infos.c
 
 OBJ = $(SRC:.c=.o)
 

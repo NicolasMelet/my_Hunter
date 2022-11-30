@@ -36,8 +36,6 @@ int menu(games *game, chara *charac, globaltime *structime)
         analyse_events(game, charac);
     }
     if (game->level != 0) {
-        if (create_charac(charac) == 84)
-            return 84;
         structime->clock = sfClock_create();
     }
     m_window_display(game);
@@ -68,7 +66,7 @@ int my_hunter(void)
     chara charac;
     globaltime structime;
 
-    if (create_window(&game) == 84)
+    if (create_window(&game) == 84 || create_charac(&charac) == 84)
         return 84;
     while (sfRenderWindow_isOpen(game.window)) {
         if (main_loop(&game, &charac, &structime) == 84)

@@ -71,5 +71,6 @@ char *my_strcat(char *dest, char const *src);
 sfVector2f get_init_pos_ran(void);
 void get_time(globaltime *structime);
 void redirect_duck(chara *charac);
+void infos(void);
 
 #endif
