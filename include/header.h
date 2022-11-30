@@ -4,7 +4,6 @@
 ** File description:
 ** header
 */
-
 #ifndef HEADER_H
     #define HEADER_H
     #include <SFML/Graphics.h>
@@ -25,6 +24,7 @@ typedef struct character {
     float dir_x;
     float dir_y;
     int heading;
+    int bounce;
 } chara;
 
 typedef struct gamestruct {
@@ -38,6 +38,7 @@ typedef struct gamestruct {
     sfEvent event;
     int is_over;
     int level;
+    int pause;
     int score;
     char *str_score;
     int ko;
@@ -58,7 +59,7 @@ void set_vectors(chara *charac, sfVector2f init_pos);
 int create_charac(chara *charac);
 void clean_ress(chara *charac, games *game);
 void move_rect(sfIntRect *rect, int offset, int max_value);
-void animate(globaltime *structime, chara *charac);
+void animate(globaltime *structime, chara *charac, games *game);
 int my_strcmp(char const *s1 ,char const *s2);
 int my_strlen(char const *str);
 void repos_charac(chara *charac);
@@ -68,5 +69,7 @@ char *int_to_str(int score);
 char *my_strcpy(char *dest, char const *src);
 char *my_strcat(char *dest, char const *src);
 sfVector2f get_init_pos_ran(void);
+void get_time(globaltime *structime);
+void redirect_duck(chara *charac);
 
 #endif

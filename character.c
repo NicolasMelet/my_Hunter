@@ -13,12 +13,12 @@
 void set_vectors(chara *charac, sfVector2f init_pos)
 {
     if (init_pos.x < 330)
-        charac->dir_x = ((double) (rand() % 251));
+        charac->dir_x = ((double) (rand() % 251)) * 2;
     if (init_pos.x >= 330 && init_pos.x <= 660)
-        charac->dir_x = ((double) (rand() % 501) - 250);
+        charac->dir_x = ((double) (rand() % 501) - 250) * 2;
     if (init_pos.x > 660)
-        charac->dir_x = ((double) (rand() % 251 - 250));
-    charac->dir_y = -300;
+        charac->dir_x = ((double) (rand() % 251 - 250)) * 2;
+    charac->dir_y = -300 * 2;
 }
 
 void set_rect(chara *charac, int origin, int width, int height)

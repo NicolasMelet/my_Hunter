@@ -5,7 +5,7 @@
 ** main
 */
 
-#include "include/header.h"
+#include "header.h"
 #include <stdlib.h>
 
 int my_hunter(void);

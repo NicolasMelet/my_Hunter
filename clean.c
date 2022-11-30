@@ -6,7 +6,7 @@
 */
 
 #include <SFML/Graphics.h>
-#include "include/header.h"
+#include "header.h"
 
 void clean_ress(chara *charac, games *game)
 {

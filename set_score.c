@@ -5,7 +5,7 @@
 ** set_score
 */
 
-#include "include/header.h"
+#include "header.h"
 #include <stdlib.h>
 
 void set_score(games *game)

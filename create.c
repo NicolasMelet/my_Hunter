@@ -64,6 +64,7 @@ int create_window(games *game)
     game->level = 0;
     game->score = 0;
     game->ko = 0;
+    game->pause = 0;
     set_score_text(game);
     return 0;
 }
@@ -74,6 +75,7 @@ int create_charac(chara *charac)
 
     set_rect(charac, 0, 110, 110);
     set_vectors(charac, init_pos);
+    charac->bounce = 0;
     if (set_charac_sprite(charac, "ducks.png", init_pos) == 84)
         return 84;
     return 0;

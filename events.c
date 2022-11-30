@@ -25,20 +25,30 @@ void duck_detection(games *game, chara *charac)
         game->event.mouseButton.y > position.y &&
         game->event.mouseButton.y < position.y + 110) {
         game->score += 500;
-        my_putnbr(game->score);
         set_score(game);
-        my_putchar('\n');
         repos_charac(charac);
+        charac->bounce = 0;
         game->ko += 1;
     }
+}
+
+void pause_game(games *game)
+{
+    if (game->pause == 1 && game->event.key.code == sfKeyP)
+        game->pause = 0;
+    else if (game->event.key.code == sfKeyP)
+        game->pause = 1;
 }
 
 void analyse_events(games *game, chara *charac)
 {
     if (game->event.type == sfEvtClosed)
         sfRenderWindow_close(game->window);
-    if (game->event.type == sfEvtMouseButtonPressed && game->level != 0)
+    if (game->event.type == sfEvtMouseButtonPressed && game->level != 0 &&
+        game->pause == 0)
         duck_detection(game, charac);
     if (game->event.type == sfEvtMouseButtonPressed && game->level == 0)
         click_play(game);
+    if (game->event.type == sfEvtKeyPressed && game->level != 0)
+        pause_game(game);
 }

@@ -16,7 +16,9 @@ SRC =	create.c	\
 	clean.c		\
 	character.c	\
 	set_score.c	\
-	put.c
+	put.c		\
+	get.c		\
+	collision.c
 
 OBJ = $(SRC:.c=.o)
 
