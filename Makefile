@@ -25,7 +25,7 @@ OBJ = $(SRC:.c=.o)
 
 NAME = my_hunter
 
-LIB = -l csfml-graphics -l csfml-system -l csfml-window
+LIB = -l csfml-graphics -l csfml-system -l csfml-window -l csfml-audio
 
 all:	$(NAME)
 

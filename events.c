@@ -10,8 +10,8 @@
 
 void click_play(games *game)
 {
-    if (game->event.mouseButton.x > 390 && game->event.mouseButton.x < 560 &&
-        game->event.mouseButton.y > 400 && game->event.mouseButton.y < 480) {
+    if (game->event.mouseButton.x > 403 && game->event.mouseButton.x < 572 &&
+        game->event.mouseButton.y > 404 && game->event.mouseButton.y < 482) {
         game->level = 1;
     }
 }

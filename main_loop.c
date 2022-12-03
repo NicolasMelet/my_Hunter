@@ -11,13 +11,16 @@
 #include <unistd.h>
 #include "header.h"
 
-void reset(games *game)
+void reset(games *game, chara *charac)
 {
+    sfMusic_stop(game->music);
     game->level = 0;
     game->score = 0;
     set_score(game);
     game->ko = 0;
     game->is_over = 0;
+    charac->bounce = 0;
+    repos_charac(charac);
 }
 
 int game_pause(games *game, chara *charac, globaltime *structime)
@@ -37,6 +40,7 @@ int menu(games *game, chara *charac, globaltime *structime)
     }
     if (game->level != 0) {
         structime->clock = sfClock_create();
+        sfMusic_play(game->music);
     }
     m_window_display(game);
     return 0;
@@ -56,7 +60,7 @@ int main_loop(games *game,
     }
     lv_window_display(game, charac);
     if (game->ko == 8 || game->is_over == 1)
-        reset(game);
+        reset(game, charac);
     return 0;
 }
 
@@ -69,9 +73,8 @@ int my_hunter(void)
     if (create_window(&game) == 84 || create_charac(&charac) == 84)
         return 84;
     while (sfRenderWindow_isOpen(game.window)) {
-        if (main_loop(&game, &charac, &structime) == 84)
-            return 84;
+        main_loop(&game, &charac, &structime);
     }
-    clean_ress(&charac, &game);
+    clean_ress(&charac, &game, &structime);
     return 0;
 }

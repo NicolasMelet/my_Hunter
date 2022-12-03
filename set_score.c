@@ -17,5 +17,5 @@ void set_score(games *game)
     my_strcpy(str, "Score : ");
     game->str_score = my_strcat(str, score);
     free(score);
-    sfText_setString(game->text_score, str);
+    sfText_setString(game->text, str);
 }

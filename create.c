@@ -12,7 +12,7 @@
 
 int set_bg(games *game)
 {
-    game->bg_text = sfTexture_createFromFile("background.jpg", NULL);
+    game->bg_text = sfTexture_createFromFile("images/background.jpg", NULL);
     if (!game->bg_text)
         return 84;
     game->bg_sprite = sfSprite_create();
@@ -27,7 +27,7 @@ int set_m(games *game)
     init_pos.x = 200;
     init_pos.y = 200;
 
-    game->m_text = sfTexture_createFromFile("menu.png", NULL);
+    game->m_text = sfTexture_createFromFile("images/menu.png", NULL);
     if (!game->m_text)
         return 84;
     game->m_sprite = sfSprite_create();
@@ -42,12 +42,12 @@ int set_score_text(games *game)
 
     init_pos.x = 750;
     init_pos.y = 50;
-    game->text_score = sfText_create();
-    game->font = sfFont_createFromFile("Pointless.ttf");
+    game->text = sfText_create();
+    game->font = sfFont_createFromFile("text/Pointless.ttf");
     set_score(game);
-    sfText_setFont(game->text_score, game->font);
-    sfText_setCharacterSize(game->text_score, 20);
-    sfText_setPosition(game->text_score, init_pos);
+    sfText_setFont(game->text, game->font);
+    sfText_setCharacterSize(game->text, 20);
+    sfText_setPosition(game->text, init_pos);
     return 0;
 }
 
@@ -57,9 +57,13 @@ int create_window(games *game)
 
     game->window = sfRenderWindow_create(mode, "SFML window",
         sfResize | sfClose, NULL);
-    if (!game->window || set_bg(game) == 84 || set_m(game) == 84)
+    game->music = sfMusic_createFromFile("sussy_ducky.wav");
+    if (!game->window || set_bg(game) == 84 || set_m(game) == 84 ||
+        !(game->music))
         return 84;
     sfRenderWindow_setFramerateLimit(game->window, 60);
+    sfMusic_setVolume(game->music, 20);
+    sfMusic_setLoop(game->music, 1);
     game->str_score = "SCORE : 0";
     game->level = 0;
     game->score = 0;
@@ -76,7 +80,7 @@ int create_charac(chara *charac)
     set_rect(charac, 0, 110, 110);
     set_vectors(charac, init_pos);
     charac->bounce = 0;
-    if (set_charac_sprite(charac, "ducks.png", init_pos) == 84)
+    if (set_charac_sprite(charac, "images/ducks.png", init_pos) == 84)
         return 84;
     return 0;
 }
