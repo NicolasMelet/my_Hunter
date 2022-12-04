@@ -38,16 +38,13 @@ int set_m(games *game)
 
 int set_score_text(games *game)
 {
-    sfVector2f init_pos;
-
-    init_pos.x = 750;
-    init_pos.y = 50;
+    game->best_score = 0;
     game->text = sfText_create();
     game->font = sfFont_createFromFile("text/Pointless.ttf");
     set_score(game);
+    set_best_score(game);
     sfText_setFont(game->text, game->font);
     sfText_setCharacterSize(game->text, 20);
-    sfText_setPosition(game->text, init_pos);
     return 0;
 }
 

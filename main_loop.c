@@ -14,6 +14,8 @@
 void reset(games *game, chara *charac)
 {
     sfMusic_stop(game->music);
+    if (game->score > game->best_score)
+        game->best_score = game->score;
     game->level = 0;
     game->score = 0;
     set_score(game);
@@ -21,6 +23,7 @@ void reset(games *game, chara *charac)
     game->is_over = 0;
     charac->bounce = 0;
     repos_charac(charac);
+    set_best_score(game);
 }
 
 int game_pause(games *game, chara *charac, globaltime *structime)
@@ -41,6 +44,7 @@ int menu(games *game, chara *charac, globaltime *structime)
     if (game->level != 0) {
         structime->clock = sfClock_create();
         sfMusic_play(game->music);
+        set_score(game);
     }
     m_window_display(game);
     return 0;

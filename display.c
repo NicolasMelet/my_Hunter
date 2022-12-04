@@ -19,6 +19,7 @@ void m_window_display(games *game)
 {
     sfRenderWindow_clear(game->window, sfBlack);
     sfRenderWindow_drawSprite(game->window, game->bg_sprite, NULL);
+    sfRenderWindow_drawText(game->window, game->text, NULL);
     sfRenderWindow_drawSprite(game->window, game->m_sprite, NULL);
     sfRenderWindow_display(game->window);
 }

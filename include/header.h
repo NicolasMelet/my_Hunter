@@ -41,6 +41,7 @@ typedef struct gamestruct {
     int level;
     int pause;
     int score;
+    int best_score;
     char *str_score;
     int ko;
 } games;
@@ -73,5 +74,6 @@ sfVector2f get_init_pos_ran(void);
 void get_time(globaltime *structime);
 void redirect_duck(chara *charac);
 void infos(void);
+void set_best_score(games *game);
 
 #endif
