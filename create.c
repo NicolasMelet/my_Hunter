@@ -70,12 +70,12 @@ int create_window(games *game)
     return 0;
 }
 
-int create_charac(chara *charac)
+int create_charac(chara *charac, games *game)
 {
     sfVector2f init_pos = get_init_pos_ran();
 
     set_rect(charac, 0, 110, 110);
-    set_vectors(charac, init_pos);
+    set_vectors(charac, init_pos, game);
     charac->bounce = 0;
     if (set_charac_sprite(charac, "images/ducks.png", init_pos) == 84)
         return 84;

@@ -10,15 +10,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-void set_vectors(chara *charac, sfVector2f init_pos)
+void set_vectors(chara *charac, sfVector2f init_pos, games *game)
 {
     if (init_pos.x < 330)
-        charac->dir_x = ((double) (rand() % 251)) * 2;
+        charac->dir_x = ((double) (rand() % 251)) *
+            ((double) 1 + ((double) game->score / 500 / 10));
     if (init_pos.x >= 330 && init_pos.x <= 660)
-        charac->dir_x = ((double) (rand() % 501) - 250) * 2;
+        charac->dir_x = ((double) (rand() % 501) - 250) *
+            ((double) 1 + ((double) game->score / 500 / 10));
     if (init_pos.x > 660)
-        charac->dir_x = ((double) (rand() % 251 - 250)) * 2;
-    charac->dir_y = -300 * 2;
+        charac->dir_x = ((double) (rand() % 251 - 250)) *
+            ((double) 1 + ((double) game->score / 500 / 10));
+    charac->dir_y = -300 * ((double) 1 + ((double) game->score / 500 / 10));
 }
 
 void set_rect(chara *charac, int origin, int width, int height)
@@ -46,11 +49,11 @@ int set_charac_sprite(chara *charac, char *image_path, sfVector2f init_pos)
     return 0;
 }
 
-void repos_charac(chara *charac)
+void repos_charac(chara *charac, games *game)
 {
     sfVector2f init_pos = get_init_pos_ran();
 
-    set_vectors(charac, init_pos);
+    set_vectors(charac, init_pos, game);
     sfSprite_setPosition(charac->sprite, init_pos);
     if (charac->dir_x >= 0 && charac->heading == 1) {
         move_rect(&charac->rect, 0, 330);

@@ -22,7 +22,7 @@ void reset(games *game, chara *charac)
     game->ko = 0;
     game->is_over = 0;
     charac->bounce = 0;
-    repos_charac(charac);
+    repos_charac(charac, game);
     set_best_score(game);
 }
 
@@ -63,7 +63,7 @@ int main_loop(games *game,
         analyse_events(game, charac);
     }
     lv_window_display(game, charac);
-    if (game->ko == 8 || game->is_over == 1)
+    if (game->is_over == 1)
         reset(game, charac);
     return 0;
 }
@@ -74,7 +74,7 @@ int my_hunter(void)
     chara charac;
     globaltime structime;
 
-    if (create_window(&game) == 84 || create_charac(&charac) == 84)
+    if (create_window(&game) == 84 || create_charac(&charac, &game) == 84)
         return 84;
     while (sfRenderWindow_isOpen(game.window)) {
         main_loop(&game, &charac, &structime);

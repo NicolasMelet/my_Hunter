@@ -9,9 +9,11 @@
 
 void infos(void)
 {
-    my_putstr("My Hunter\nVisez les canards avec la souris et faites un \
-clic gauche pour les éliminer\n- 8 canards apparaîtront par \
-partie, éliminez les tous et vous avez gagné\n- Après 3 rebonds \
-les canards partiront et vous aurez perdu\n- Appuyez sur 'p' \
-pour mettre le jeu en pause\n");
+    my_putstr("My Hunter\nAim with your mouse and shoot with Left Click\
+\n- The ducks army are coming and they are unstopable...\n\
+You are the only one able to stop their invasion! Shoot them and get the \
+highest possible score !\n- The ducks will bounce 3 times on the wall before \
+escaping to the air\nIf a duck escapes, the game end\nThe ducks will gain in \
+swiftness each time you take down one of them\n\
+- Press 'p' to pause the game\n");
 }
